@@ -4,12 +4,14 @@ const catchError = async (ctx, next) => {
   try {
     await next();
   } catch (error) {
-    if (global.config.enviroment === 'dev') {
+    const isHTTPExceptionError = error instanceof HTTPExceptionError;
+    const isDev = global.config.enviroment === 'dev';
+    if (isDev && !isHTTPExceptionError) {
       throw error;
     }
     // throw error;
     // error 堆栈调用信息
-    if (error instanceof HTTPExceptionError) {
+    if (isHTTPExceptionError) {
       ctx.body = {
         error_code: error.errorCode,
         msg: error.msg,

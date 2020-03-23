@@ -3,7 +3,7 @@ module.exports = {
   enviroment: 'dev',
   // prod
   database: {
-    dbName: 'island',
+    dbName: 'test',
     host: 'localhost',
     port: 3306,
     user: 'root',

@@ -1,5 +1,5 @@
 const { Sequelize, Model } = require('sequelize');
-const { db } = require('../core/db');
+const { sequelize } = require('../core/db');
 // 初始化 user 模型
 class User extends Model {
 
@@ -10,12 +10,16 @@ User.init({
   // 注册 User id 设计 id 编号系统
   // 自增
   id: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
   nickname: Sequelize.STRING,
-  email: Sequelize.STRING,
+  email: {
+    // 最多 64 字符
+    type: Sequelize.STRING(128),
+    unique: true,
+  },
   password: Sequelize.STRING,
   // 每个用户对同一个小程序公众号存在唯一的openid 同一个用户小程序,公众号存在唯一的union id
   openid: {
@@ -23,8 +27,10 @@ User.init({
     type: Sequelize.STRING(64),
     unique: true,
   },
-  test: Sequelize.STRING,
 }, {
-  sequelize: db,
-  tableName: 'user',
+  sequelize,
+  tableName: 'user', // 重命名
 });
+module.exports = {
+  User,
+};
