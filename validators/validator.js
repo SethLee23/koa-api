@@ -1,6 +1,8 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable max-classes-per-file */
 const { LinValidator, Rule } = require('../core/lin-validator-v2');
 const { User } = require('../models/user');
+const { LoginType, ClassicType } = require('../lib/enum');
 
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
@@ -19,7 +21,6 @@ class RegisterValidater extends LinValidator {
         max: 32,
       }),
       // eslint-disable-next-line no-useless-escape
-      // new Rule('matches', '密码不符合规范', "^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?![,\.#%'\+\*\-:;^_`]+$)[,\.#%'\+\*\-:;^_`0-9A-Za-z]{6,20}$"),
     ];
     this.password2 = this.password;
     this.nickname = [
@@ -63,4 +64,81 @@ class RegisterValidater extends LinValidator {
     }
   }
 }
-module.exports = { PositiveIntegerValidator, RegisterValidater };
+
+class TokenValidValidater extends LinValidator {
+  constructor() {
+    super();
+    this.account = [new Rule('isLength', '不符合规则', { min: 4, max: 32 })];
+    this.secret = [
+      // 不是必须传入的
+      // 多种类型的登录
+      // 1.可以不传 2.传了要确保正确
+      new Rule('isOptional'),
+      new Rule('isLength', '至少6个字符', { min: 6, max: 128 }),
+    ];
+  }
+
+  // type 枚举
+  validateLoginType(vals) {
+    const { type } = vals.body;
+    if (!type) {
+      throw new Error('type 必须是参数');
+    }
+    if (!LoginType.isThisType(type)) {
+      throw new Error('type 参数不合法');
+    }
+  }
+}
+class NotEmptyValidater extends LinValidator {
+  constructor() {
+    super();
+    this.token = [new Rule('isLength', 'token不能为空', { min: 1 })];
+  }
+}
+class LikeValidator extends PositiveIntegerValidator {
+  constructor() {
+    super();
+    // eslint-disable-next-line no-use-before-define
+    const checker = new CheckType(ClassicType);
+    this.validateType = checker.check.bind(checker);
+    // this.validateType = checkType;
+  }
+}
+class ClassicValidator extends LikeValidator {
+
+}
+// 使用工厂模式接受类型并判断是否符合条件
+class CheckType {
+  constructor(type) {
+    this.enumType = type;
+  }
+
+  check(vals) {
+    const type = vals.body.type || vals.path.type;
+    if (!type) {
+      throw new Error('type 必须是参数');
+    }
+    if (!this.enumType.isThisType(parseInt(type, 10))) {
+      throw new Error('type 参数不合法');
+    }
+  }
+}
+// function checkType(vals) {
+//   let type = vals.body.type || vals.path.type;
+//   type = parseInt(type, 10);
+//   this.parsed.path.type = type;
+//   if (!type) {
+//     throw new Error('type 必须是参数');
+//   }
+//   if (!ClassicType.isThisType(type)) {
+//     throw new Error('type 参数不合法');
+//   }
+// }
+module.exports = {
+  PositiveIntegerValidator,
+  RegisterValidater,
+  TokenValidValidater,
+  NotEmptyValidater,
+  LikeValidator,
+  ClassicValidator,
+};

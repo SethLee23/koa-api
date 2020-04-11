@@ -16,11 +16,12 @@ const sequelize = new Sequelize(dbName, user, password, {
   timezone: '+08:00',
   define: {
     // create_time update_time delete_time
-    timestamps: true,
+    timestamps: false,
     paranoid: true,
   },
 });
 sequelize.sync({
-  force: true,
+  // force: true,
+  force: false,
 });
 module.exports = { sequelize };

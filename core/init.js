@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const requireDirectory = require('require-directory');
 const Router = require('koa-router');
 
@@ -22,12 +23,16 @@ class InitManager {
 
   // 全局
   static loadHTTPException() {
-    // eslint-disable-next-line global-require
     const errors = require('./http-exception');
-    // eslint-disable-next-line global-require
     const paramError = require('./param-exception-error');
+    const Success = require('./success-exception');
+    const NotFound = require('./notFound');
+    const errs = require('./allException');
     global.Errors = errors;
     global.ParamError = paramError;
+    global.Success = Success;
+    global.NotFound = NotFound;
+    global.errs = errs;
   }
 
   static loadConfig(path = '') {
