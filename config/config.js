@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-21 22:33:25
+ * @LastEditTime: 2020-04-11 19:43:20
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \island-node\config\config.js
+ */
 module.exports = {
   // env
   enviroment: 'dev',
@@ -17,5 +25,9 @@ module.exports = {
     appId: 'wx36217cc6fcafacee',
     appSecret: '4315cfa28399c41c23e002f2e3d653fa',
     loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code',
+  },
+  yushu: {
+    detailUrl: 'http://t.yushu.im/v2/book/id/%s',
+    keywordUrl: 'http://t.yushu.im/v2/book/search?q=%s&count=%s&start=%s&summary=%s',
   },
 };
