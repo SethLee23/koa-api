@@ -123,6 +123,21 @@ class CheckType {
     }
   }
 }
+class SearchValidator extends LinValidator {
+  constructor() {
+    super();
+    // 关键字 页码 页面获取条数
+    this.start = [
+      new Rule('isOptional', '', 0),
+      new Rule('isInt', 'start不符合规范', { min: 0, max: 60000 }),
+    ];
+    this.count = [
+      new Rule('isOptional', '', 20),
+      new Rule('isInt', 'count不符合规范', { min: 1, max: 20 }),
+    ];
+    this.q = [new Rule('isLength', '搜索关键词不得为空', { min: 1, max: 22 })];
+  }
+}
 // function checkType(vals) {
 //   let type = vals.body.type || vals.path.type;
 //   type = parseInt(type, 10);
@@ -141,4 +156,5 @@ module.exports = {
   NotEmptyValidater,
   LikeValidator,
   ClassicValidator,
+  SearchValidator,
 };

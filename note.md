@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-31 23:55:53
- * @LastEditTime: 2020-04-11 16:47:33
+ * @LastEditTime: 2020-04-14 21:39:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \island-node\note.md
@@ -72,3 +72,42 @@ concurrency 并发
 parallelism 并行 同时，多线程才能实现
 <!-- cpu 密集型操作 -->
 <!-- 资源密集型操作 -->
+6. 根据 group 分组
+attributes 重定义属性名
+使用Sequelize.fn提供的函数求和
+```js
+const favors = await Favor.findAll({
+      where: {
+        art_id: {
+          [Op.in]: arr,
+        },
+      },
+      group: ['art_id'],
+      attributes: ['art_id', [Sequelize.fn('COUNT', '*'), 'count']], // Sequenize 求和（数组length）求总和：SUM
+    });
+```
+7. 拼接两个数据库中获取的数据
+使用两层循环
+```js
+const classicFields = {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true, // 自定义 非自增
+  },
+};
+```
+
+# 中间层和微服务
+  数据存储在服务端-可拆分成多个服务
+![image.png](https://i.loli.net/2020/04/11/5XcvrzPG9kBowND.png)
+
+# 编码关键字
+encodeURI
+
+# 进行分页
+```js
+ offset: 5,
+ limit: 5,
+```
+ 
+# 
