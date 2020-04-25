@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-11 15:30:49
- * @LastEditTime: 2020-04-11 21:28:21
+ * @LastEditTime: 2020-04-22 21:22:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \island-node\models\hot-book.js
@@ -22,15 +22,15 @@ class HotBook extends Model {
       // where: {
       //   index: 0,
       // },
-      offset: 5,
-      limit: 5,
+      // offset: 5,
+      // limit: 5,
     });
     // 存储 book 所有 id
     const arr = [];
     books.forEach((item) => {
       arr.push(item.id);
     });
-    // 获取所有喜欢的书籍
+    // 获取所有喜欢的书籍p
     const favors = await Favor.findAll({
       where: {
         art_id: {
@@ -42,7 +42,7 @@ class HotBook extends Model {
     });
     // 计算书籍被喜欢的次数
     books.forEach((book) => {
-      book.setDataValue('count', HotBook.getEachBookStatus(book, favors));
+      book.setDataValue('fav_nums', HotBook.getEachBookStatus(book, favors));
     });
     return books;
   }

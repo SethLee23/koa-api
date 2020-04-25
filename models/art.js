@@ -8,7 +8,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-07 21:47:15
- * @LastEditTime: 2020-04-11 17:04:41
+ * @LastEditTime: 2020-04-23 23:01:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \island-node\models\art.js
@@ -64,10 +64,22 @@ class Art {
         art = await Sentence.findOne(finder);
         break;
       case 400:
+        const Book = require('./book');
+        art = await Book.findOne(finder);
+        if (!art) {
+          art = await Book.creat({
+            id: art_id,
+          });
+        }
         break;
       default:
         break;
     }
+    // 存在图片连接
+    // if (art && art.image) {
+    //   const imgUrl = art.dataValues.image;
+    //   art.dataValues.image = global.config.host + imgUrl;
+    // }
     return art;
   }
   // 学习写法 思路：妙啊！！！switch case 解除大法
@@ -126,16 +138,5 @@ class Art {
   }
 
   // very bad 写法：根据不同的类型获取到不同的ids数组后统一进行一次查询
-  // static async getDetail(art_id, type, uid) {
-  //   const art = await Art.getData(art_id, type, uid);
-  //   if (!art) {
-  //     throw new global.NotFound();
-  //   }
-  //   // const like = await Favor.userLikeIt(art_id, type, uid);
-  //   return {
-  //     art,
-  //     // likeStatus: like,
-  //   };
-  // }
 }
 module.exports = { Art };

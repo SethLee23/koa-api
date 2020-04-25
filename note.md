@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-31 23:55:53
- * @LastEditTime: 2020-04-14 21:39:50
+ * @LastEditTime: 2020-04-24 22:34:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \island-node\note.md
@@ -110,4 +110,59 @@ encodeURI
  limit: 5,
 ```
  
-# 
+# 书籍短评
+需要使用公司账号
+书籍短评单独建表 
+
+# JSON 序列化
+1. 删除字段
+2. 使用 scope 查询的时候
+3. JSON 序列化
+定义 toJSON 后序列化返回的字段
+在对应的model添加实例方法
+```js
+const obj = {
+  name: '1yue',
+  age: 18,
+  toJSON: function(){
+    return {
+      name1: '2yue' 
+    }
+  }
+},
+console.log(JSON.stringify(obj));
+```
+
+# 全局控制Model
+在 model 原型上添加toJSON方法
+在model上控制图片路径
+
+# 静态资源存储位置
+1. 网站目录（放在api下）
+2. 静态资源服务器（微服务）
+3. 云服务器 OSS,CDN,ECS,RDS
+4. 免费静态资源服务器（github等）
+
+# 小程序前端处理令牌
+用户令牌过期 
+单令牌:
+启动 --验证令牌是否合法--> API
+合法： 不做任何处理
+不合法： 返回403， 重新获取新的令牌，发放新的令牌
+
+强验证：
+双令牌：
+access_token:验证用户身份（2h）
+refresh_token: 刷新(自身刷新)
+每次获取access_token被刷新后重新定义refresh_token的时间
+
+# 服务端部署
+1. 云服务器
+2. 域名解析
+3. 域名备案
+
+4. 安装node,xampp,mysql
+
+5. nginx 端口转发
+
+# 守护进程与PM2

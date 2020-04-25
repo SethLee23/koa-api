@@ -138,6 +138,17 @@ class SearchValidator extends LinValidator {
     this.q = [new Rule('isLength', '搜索关键词不得为空', { min: 1, max: 22 })];
   }
 }
+class AddShortCommentValidator extends PositiveIntegerValidator {
+  constructor() {
+    super();
+    this.content = [
+      new Rule('isLength', '短评最少1个字符，最多24个字符', {
+        min: 1,
+        max: 24,
+      }),
+    ];
+  }
+}
 // function checkType(vals) {
 //   let type = vals.body.type || vals.path.type;
 //   type = parseInt(type, 10);
@@ -157,4 +168,5 @@ module.exports = {
   LikeValidator,
   ClassicValidator,
   SearchValidator,
+  AddShortCommentValidator,
 };

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-01 00:15:12
- * @LastEditTime: 2020-04-08 23:49:41
+ * @LastEditTime: 2020-04-23 23:06:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \island-node\models\classic.js
@@ -13,7 +13,9 @@ const { Sequelize, Model } = require('sequelize');
 const { sequelize } = require('../core/db');
 
 const classicFields = {
-  image: Sequelize.STRING,
+  image: {
+    type: Sequelize.STRING,
+  },
   content: Sequelize.STRING,
   pubdate: Sequelize.DATEONLY,
   fav_nums: {

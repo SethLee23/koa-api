@@ -3,7 +3,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-11 19:14:18
- * @LastEditTime: 2020-04-14 22:09:34
+ * @LastEditTime: 2020-04-22 21:08:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \island-node\models\book.js
@@ -18,13 +18,13 @@ const { sequelize } = require('../core/db');
 const { Favor } = require('./favor');
 
 class Book extends Model {
-  constructor(id) {
-    super();
-    this.id = id;
-  }
+  // constructor(id) {
+  //   super();
+  //   this.id = id;
+  // }
 
-  async detail() {
-    const url = util.format(global.config.yushu.detailUrl, this.id);
+  async detail(id) {
+    const url = util.format(global.config.yushu.detailUrl, id);
     const detail = await axios.get(url);
     return detail.data;
   }
@@ -53,7 +53,7 @@ const classicFields = {
   },
   fav_nums: {
     type: Sequelize.INTEGER,
-    default: 0,
+    defaultValue: 0,
   },
 };
 Book.init(classicFields, {
